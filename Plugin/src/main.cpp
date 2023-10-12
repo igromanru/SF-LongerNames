@@ -1,62 +1,59 @@
 
 #include "PCH.h"
 
-namespace ShipCharCount
+namespace
 {
-	struct Prolog : Xbyak::CodeGenerator
+	struct InputBoxCave : Xbyak::CodeGenerator
 	{
-		Prolog()
+		InputBoxCave(int maxNameLength)
 		{
-			// save rcx to the stack
-			push(rcx);
-			// save rax to the stack
-			push(rax);
+			mov(r8d, maxNameLength);
 		}
 	};
 
-	struct Epilog : Xbyak::CodeGenerator
+	struct ItemNameLengthCheckCave : Xbyak::CodeGenerator
 	{
-		Epilog()
+		ItemNameLengthCheckCave(int maxNameLength)
 		{
-			// write the return value from the hook function to r8d
-			mov(r8d, eax);
-
-			// restore rax from stack
-			pop(rax);
-			// restore rcx from stack
-			pop(rcx);
+			cmp(edi, maxNameLength);
 		}
 	};
 
-	int Hook_GetMaxCharCount()
+	void PatchInputBox()
 	{
-		return Settings::GetSingleton()->GetShipNameMaxChars();
+		auto inputBoxPatchAddress = reinterpret_cast<uintptr_t>(search_pattern<"48 8B 88 ?? ?? ?? ?? 44 89 81 ?? ?? ?? ?? C3">());
+		if (inputBoxPatchAddress) {
+			inputBoxPatchAddress += 7;
+			INFO("Found the input box patch address");
+			DEBUG("Input box patch address: {:x}", inputBoxPatchAddress);
+
+			ItemNameLengthCheckCave inputBoxCave{ Settings::GetSingleton()->GetMaxNameLength() };
+			inputBoxCave.ready();
+
+			const auto inputBoxPatch = AddASMPatch(inputBoxPatchAddress, { 0, 7 }, &inputBoxCave);
+			inputBoxPatch->Enable();
+			INFO("Input Box patched")
+		} else {
+			ERROR("Couldn't find the input box patch address");
+		}
 	}
 
-	void Install()
+	void PatchItemNameLengthCheck()
 	{
-		auto patchAddress = reinterpret_cast<uintptr_t>(search_pattern<"48 8B 88 ?? ?? ?? ?? 44 89 81 ?? ?? ?? ?? C3">());
-		if (patchAddress) {
-			patchAddress += 7;
-			INFO("Found the patch address: {:x}", patchAddress);
+		auto itemNameLengthAddress = reinterpret_cast<uintptr_t>(search_pattern<"3B 3D ?? ?? ?? ?? 0F 87 ?? ?? ?? ?? F6 43 14 02">());
+		if (itemNameLengthAddress) {
+			INFO("Found the item name length check address");
+			DEBUG("Item name length check address: {:x}", itemNameLengthAddress);
 
-			Prolog prolog{};
-			prolog.ready();
-			Epilog epilog{};
-			epilog.ready();
+			ItemNameLengthCheckCave itemNameLengthCheckCave{ Settings::GetSingleton()->GetMaxNameLength() };
+			itemNameLengthCheckCave.ready();
 
-			// Create hook
-			const auto caveHookHandle = AddCaveHook(
-				patchAddress,
-				{ 0, 7 },
-				FUNC_INFO(Hook_GetMaxCharCount),
-				&prolog,
-				&epilog,
-				HookFlag::kRestoreAfterEpilog);
-			caveHookHandle->Enable();
-			INFO("Max character count patched successfully!")
-		} else {
-			ERROR("Couldn't find the patch address");
+			const auto inputBoxPatch = AddASMPatch(itemNameLengthAddress, { 0, 6 }, &itemNameLengthCheckCave);
+			inputBoxPatch->Enable();
+			INFO("Item name length check patched")
+		}
+		else {
+			ERROR("Couldn't find the item name length check address");
 		}
 	}
 }
@@ -71,9 +68,13 @@ DLLEXPORT constinit auto SFSEPlugin_Version = []() noexcept {
 	//data.UsesAddressLibrary(true);
 	data.HasNoStructUse(true);
 	//data.IsLayoutDependent(true);
-	data.CompatibleVersions({ SFSE::RUNTIME_SF_1_7_23,
+	data.CompatibleVersions({
+	    SFSE::RUNTIME_SF_1_7_23,
 		SFSE::RUNTIME_SF_1_7_29,
-		SFSE::RUNTIME_LATEST });
+		SFSE::RUNTIME_SF_1_7_33,
+		SFSE::RUNTIME_SF_1_7_36,
+		SFSE::RUNTIME_LATEST
+	});
 
 	return data;
 }();
@@ -87,8 +88,9 @@ namespace
 			{
 				// Load the settings file
 				Settings::GetSingleton()->Load();
-				// Install plugin
-				ShipCharCount::Install();
+				// Apply patches
+				PatchInputBox();
+				PatchItemNameLengthCheck();
 				break;
 			}
 		default:
@@ -100,10 +102,7 @@ namespace
 DLLEXPORT bool SFSEAPI SFSEPlugin_Load(const SFSE::LoadInterface* a_sfse)
 {
 #ifndef NDEBUG
-	MessageBoxW(NULL, L"Loaded. You can attach the debugger now, then press OK", L"Starfield-LongerNames SFSE Plugin", NULL);
-	/*while (!IsDebuggerPresent()) {
-		Sleep(100);
-	}*/
+	MessageBoxA(NULL, "Loaded. You can attach the debugger now or continue", Plugin::NAME.data(), NULL);
 #endif
 
 	SFSE::Init(a_sfse, false);
