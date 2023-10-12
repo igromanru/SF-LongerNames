@@ -19,6 +19,10 @@ namespace
 		}
 	};
 
+	void Hook_Placeholder()
+	{
+	}
+
 	void PatchInputBox()
 	{
 		auto inputBoxPatchAddress = reinterpret_cast<uintptr_t>(search_pattern<"48 8B 88 ?? ?? ?? ?? 44 89 81 ?? ?? ?? ?? C3">());
@@ -27,11 +31,17 @@ namespace
 			INFO("Found the input box patch address");
 			DEBUG("Input box patch address: {:x}", inputBoxPatchAddress);
 
-			ItemNameLengthCheckCave inputBoxCave{ Settings::GetSingleton()->GetMaxNameLength() };
+			InputBoxCave inputBoxCave{ Settings::GetSingleton()->GetMaxNameLength() };
 			inputBoxCave.ready();
-
-			const auto inputBoxPatch = AddASMPatch(inputBoxPatchAddress, { 0, 7 }, &inputBoxCave);
-			inputBoxPatch->Enable();
+			
+			const auto caveHookHandle = AddCaveHook(
+				inputBoxPatchAddress,
+				{ 0, 7 },
+				FUNC_INFO(Hook_Placeholder),
+				&inputBoxCave,
+				nullptr,
+				HookFlag::kRestoreAfterProlog);
+			caveHookHandle->Enable();
 			INFO("Input Box patched")
 		} else {
 			ERROR("Couldn't find the input box patch address");
