@@ -1,0 +1,9 @@
+[
+    {
+        "action": "copy",
+        "params": [
+            "{dist}\\*.dll",
+            "{target_base}"
+        ]
+    }
+]
