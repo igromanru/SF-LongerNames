@@ -25,9 +25,9 @@ namespace
 
 	void PatchInputBox()
 	{
-		auto inputBoxPatchAddress = reinterpret_cast<uintptr_t>(search_pattern<"48 8B 88 ?? ?? ?? ?? 44 89 81 ?? ?? ?? ?? C3">());
+		auto inputBoxPatchAddress = reinterpret_cast<uintptr_t>(search_pattern<"48 8B 81 ?? ?? ?? ?? 48 8B 88 ?? ?? ?? ?? 44 89 81">());
 		if (inputBoxPatchAddress) {
-			inputBoxPatchAddress += 7;
+			inputBoxPatchAddress += 14;
 			INFO("Found the input box patch address");
 			DEBUG("Input box patch address: {:x}", inputBoxPatchAddress);
 
@@ -50,7 +50,7 @@ namespace
 
 	void PatchItemNameLengthCheck()
 	{
-		auto itemNameLengthAddress = reinterpret_cast<uintptr_t>(search_pattern<"3B 3D ?? ?? ?? ?? 0F 87 ?? ?? ?? ?? F6 43 14 02">());
+		auto itemNameLengthAddress = reinterpret_cast<uintptr_t>(search_pattern<"3B 3D ?? ?? ?? ?? 0F 87 ?? ?? ?? ?? F6 43 ?? 02">());
 		if (itemNameLengthAddress) {
 			INFO("Found the item name length check address");
 			DEBUG("Item name length check address: {:x}", itemNameLengthAddress);

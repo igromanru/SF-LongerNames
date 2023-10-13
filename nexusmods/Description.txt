@@ -1,27 +1,28 @@
-[size=4][u][b]Description[/b][/u][/size]
-Fixed and improved version of the [url=https://www.nexusmods.com/starfield/mods/1635]Longer Ship Outpost and Item Names[/url], which is currently abandoned. The mod increases the maximum name length allowed for Outposts and Ships. it actually never worked for Items, because items have a second check that resets items name, if the name length exceeds 26 characters.  
-I made the mod update resistant, it supports all versions since release and I even made an ASI Loader version, for people who are playing the GamePass version of the game. The original author even merged my changes into his repository, but then vanished. I'll maintain the mod for now.
+[font=Verdana][size=4][b]Description[/b][/size][/font]
+Fixed and IMPROVED version of the [url=https://www.nexusmods.com/starfield/mods/1635]Longer Ship Outpost and Item Names[/url], which is currently abandoned. The mod increases the maximum name length allowed for Outposts, Ships and Items.
+In the original mod, renaming of Items never worked because items have a second length check, that allows only 26 characters.  
+I've found the second check, made the mod update resistant, it supports all versions since release and I even made an ASI Loader version, for people who are playing the GamePass version of the game.
 
-[size=4][u][b]Requirements[/b][/u][/size]
+[font=Verdana][size=4][b]Requirements[/b][/size][/font]
 [list]
 [*][size=3][url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url][/size]
 [*][b]Or[/b]
 [*][size=3][url=https://github.com/ThirteenAG/Ultimate-ASI-Loader]Ultimate ASI Loader[/url][/size] (bink2w64.dll version)
 [/list]
 
-[size=4][u][b]Installation of the SFSE version via Vortex[/b][/u][/size]
+[font=Verdana][size=4][b]Installation of the SFSE version via Vortex[/b][/size][/font]
 1. You NEED to install the [url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url] manually first and always launch the game with it, otherwise the mod won't work
 2. Simply click on [b]Mod Manager Download[/b] button in [i]Files[/i] tab
 3. Install the mod in Vortex like you do with any other mods
 4. Always launch the game with SFSE_loader. Here is a guide how to do it via steam: [url=https://www.nexusmods.com/starfield/mods/689]SFSE - Launch on Steam with In-Game Overlay[/url]
 
-[size=4][u][b]Installation of the ASI Loader version via Vortex[/b][/u][/size]
+[font=Verdana][size=4][b]Installation of the ASI Loader version via Vortex[/b][/size][/font]
 1. You NEED to install the [url=https://github.com/ThirteenAG/Ultimate-ASI-Loader]Ultimate ASI Loader[/url] manually first by downloading the [b]bink2w64.dll[/b]. Rename the original bink2w64.dll in the game root directory to [b]bink2w64Hooked.dll[/b] then copy the downloaded DLL in the same directory.
 2. Simply click on [b]Mod Manager Download[/b] button in [i]Files[/i] tab
 3. Install the mod in Vortex like you do with any other mods
 4. The ASI loader will start automatically every time you start the game
 
-[size=4][u][b]Manual installation of the the SFSE version[/b][/u][/size]
+[font=Verdana][size=4][b]Manual installation of the the SFSE version[/b][/size][/font]
 1. You NEED to install the [url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url] manually first and always launch the game with it, otherwise the mod won't work
 2. Use the [b]Manual Download[/b] button in [i]Files[/i] tab to download the mod in a zip file
 3. Extract the content of the zip file into your game root directory.
@@ -30,26 +31,26 @@ I made the mod update resistant, it supports all versions since release and I ev
 [size=2]For example: [i]C:\Program Files (x86)\Steam\steamapps\common\Starfield[i]\Data\SFSE\plugins\SF-LongerNames.dll[/i][/i][/size]
 5. Always launch the game with SFSE_loader. Here is a guide how to do it via steam: [url=https://www.nexusmods.com/starfield/mods/689]SFSE - Launch on Steam with In-Game Overlay
 [/url]
-[size=4][u][b]Uninstall[/b][/u][/size]
+[font=Verdana][size=4][b]Uninstall[/b][/size][/font]
 To uninstall the mod/plugin manually, delete the [b]SF-LongerNames.dll[/b] from your [i](game root)\Data\SFSE\plugins\[/i] directory.
 
-[size=4][u][b]Configuration[/b][/u][/size]
-You can change the maximum allowed names length in the [b]SF-LongerNames.ini[/b].
-1. You will find the [b]SF-LongerNames.ini[/b] in the installation directory of the mod. It should be in [i](game root)[/i][i]\Data\SFSE\plugins\[/i] directory for the SFSE version.
+[font=Verdana][size=4][b]Configuration[/b][/size][/font]
+[i]Since v2.0.0, the mod uses a toml file, before it was an ini.[/i]
+You can change the maximum allowed names length in the [b]SF-LongerNames.toml[/b].
+1. You will find the [b]SF-LongerNames.toml[/b] in the installation directory of the mod. It should be in [i](game root)[/i][i]\Data\SFSE\plugins\[/i] directory for the SFSE version.
     [size=2]If the file doesn't exist, start the game once, until the main menu, then the file should appear But close the game again, before doing any changes.[/size]
-2. Open the SF-LongerNames.ini with any Text Editor and change the value of [b]ShipNameMaxChars[/b].
+2. Open the SF-LongerNames.toml with any Text Editor and change the value of [b]maxNameLength[/b].
 The value must be between 5 and 255.
 3. Save the file and start the game again.
 
-[size=4][u][b]Compatibility[/b][/u][/size]
+[font=Verdana][size=4][b]Compatibility[/b][/size][/font]
 Obviously the mod is not compatible with [url=https://www.nexusmods.com/starfield/mods/1635]Longer Ship Outpost and Item Names[/url]. Which is currently outdated anyway, but if you're playing on the older version of the game or it will be fixed in the future, you shouldn't try to use both mods at the same time.
 
-[size=2][u][b]Source Code[/b][/u][/size]
-[url=https://github.com/igromanru/Starfield-LongerNames/tree/fixed]My GitHub fork[/url]
-
-[size=2][u][b]Credits[/b][/u][/size]
+[font=Verdana][size=2][b]Credits[/b][/size][/font]
 [list]
-[*][url=https://www.nexusmods.com/starfield/users/37869380]Investigamer[/url]﻿, the original mod creator, who found first which address to patch
+[*][url=https://www.nexusmods.com/starfield/users/37869380]Investigamer[/url]﻿, the creator of the first mod
 [*][url=https://github.com/ianpatt/]ianpatt[/url] for [url=https://github.com/ianpatt/sfse]Starfield Script Extender[/url]
 [*][url=https://github.com/gottyduke]gottyduke[/url] for [url=https://github.com/gottyduke/DKUtil]DKUtil[/url] and [url=https://github.com/gottyduke/SF_PluginTemplate]SF_PluginTemplate[/url]
 [/list]
+
+[url=https://github.com/igromanru/Starfield-LongerNames/tree/fixed][size=1]My GitHub fork[/size][/url]
