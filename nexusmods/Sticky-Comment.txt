@@ -1,6 +1,7 @@
 [size=4][b]Game Update Information[/b][/size]
 The mod uses signature scanning to find the correct address for the patch. It doesn't need updates until SFSE refuses to load it or it stops working after Bethesda changes the code I modify, in which case I have to change my code as well.
-If you use the SFSE version, make sure to update the [url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url] for the game version that you use. 
+However, the SFSE itself must be updated after each game update!  
+Make sure to update the [url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url] for the version of the game you're using before reporting that the mod is not working.
 
 Users of the ASI Loader version don't have to care about updates until the mod stops working.  
 Thanks to the byte pattern signature scan, the mod verifies the integrity automatically, therefore it should never crash your game, if the code mismatches after a game update. It will simply stop working.
