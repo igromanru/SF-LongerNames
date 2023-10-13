@@ -97,13 +97,6 @@
 #include <vector>
 #include <version>
 
-// Clib
-#include "RE/Starfield.h"
-#include "SFSE/SFSE.h"
-
-// Ini files
-#include "SimpleIni.h"
-
 // winnt
 #include <ShlObj_core.h>
 
@@ -111,9 +104,9 @@
 #undef max
 
 using namespace std::literals;
-using namespace REL::literals;
 
 #define DLLEXPORT extern "C" [[maybe_unused]] __declspec(dllexport)
+#define PLUGIN_MODE
 
 // Plugin
 #include "Plugin.h"

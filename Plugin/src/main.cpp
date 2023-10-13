@@ -31,7 +31,7 @@ namespace
 			INFO("Found the input box patch address");
 			DEBUG("Input box patch address: {:x}", inputBoxPatchAddress);
 
-			InputBoxCave inputBoxCave{ Settings::GetSingleton()->GetMaxNameLength() };
+			InputBoxCave inputBoxCave{ 250 };
 			inputBoxCave.ready();
 			
 			const auto caveHookHandle = AddCaveHook(
@@ -55,7 +55,7 @@ namespace
 			INFO("Found the item name length check address");
 			DEBUG("Item name length check address: {:x}", itemNameLengthAddress);
 
-			ItemNameLengthCheckCave itemNameLengthCheckCave{ Settings::GetSingleton()->GetMaxNameLength() };
+			ItemNameLengthCheckCave itemNameLengthCheckCave{ 250 };
 			itemNameLengthCheckCave.ready();
 
 			const auto inputBoxPatch = AddASMPatch(itemNameLengthAddress, { 0, 6 }, &itemNameLengthCheckCave);
@@ -68,62 +68,29 @@ namespace
 	}
 }
 
-DLLEXPORT constinit auto SFSEPlugin_Version = []() noexcept {
-	SFSE::PluginVersionData data{};
-
-	data.PluginVersion(Plugin::Version);
-	data.PluginName(Plugin::NAME);
-	data.AuthorName(Plugin::AUTHOR);
-	data.UsesSigScanning(true);
-	//data.UsesAddressLibrary(true);
-	data.HasNoStructUse(true);
-	//data.IsLayoutDependent(true);
-	data.CompatibleVersions({
-	    SFSE::RUNTIME_SF_1_7_23,
-		SFSE::RUNTIME_SF_1_7_29,
-		SFSE::RUNTIME_SF_1_7_33,
-		SFSE::RUNTIME_SF_1_7_36,
-		SFSE::RUNTIME_LATEST
-	});
-
-	return data;
-}();
-
-namespace
+DWORD WINAPI Thread(LPVOID param)
 {
-	void MessageCallback(SFSE::MessagingInterface::Message* a_msg) noexcept
-	{
-		switch (a_msg->type) {
-		case SFSE::MessagingInterface::kPostLoad:
-			{
-				// Load the settings file
-				Settings::GetSingleton()->Load();
-				// Apply patches
-				PatchInputBox();
-				PatchItemNameLengthCheck();
-				break;
-			}
-		default:
-			break;
-		}
-	}
+	PatchInputBox();
+	PatchItemNameLengthCheck();
+	return true;
 }
 
-DLLEXPORT bool SFSEAPI SFSEPlugin_Load(const SFSE::LoadInterface* a_sfse)
+extern "C" __declspec(dllexport) void InitializeASI()
 {
 #ifndef NDEBUG
-	MessageBoxA(NULL, "Loaded. You can attach the debugger now or continue", Plugin::NAME.data(), NULL);
+	MessageBoxA(NULL, "Loaded. You can attach the debugger now", "SF LongerNames ASI Plugin", NULL);
 #endif
+	dku::Logger::Init(Plugin::NAME, std::to_string(Plugin::Version));
+	INFO("Game: {}", dku::Hook::GetProcessName());
+    Trampoline::AllocTrampoline(256);
 
-	SFSE::Init(a_sfse, false);
+	CloseHandle(CreateThread(nullptr, 0, Thread, nullptr, 0, nullptr));
+}
 
-	DKUtil::Logger::Init(Plugin::NAME, std::to_string(Plugin::Version));
 
-	INFO("{} v{} loaded", Plugin::NAME, Plugin::Version);
+BOOL APIENTRY DllMain(HMODULE a_hModule, DWORD a_dwReason, LPVOID a_lpReserved)
+{
 
-	// Insert plugin to messaging interface
-	SFSE::AllocTrampoline(1 << 8);
-	SFSE::GetMessagingInterface()->RegisterListener(MessageCallback);
 
-	return true;
+	return TRUE;
 }

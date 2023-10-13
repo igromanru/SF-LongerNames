@@ -4,8 +4,8 @@
 *.zip
 *.timestamp
 deploy-*.ps1
-vcpkg_installed/
 *.dll
 *.pdb
 *.lib
 *.exp
+*.asi
