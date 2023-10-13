@@ -1,5 +1,12 @@
+[size=4][b]Game Update Information[/b][/size]
+The mod uses signature scanning to find the correct address for the patch. It doesn't need updates until SFSE refuses to load it or it stops working after Bethesda changes the code I modify, in which case I have to change my code as well.
+If you use the SFSE version, make sure to update the [url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url] for the game version that you use. 
+
+Users of the ASI Loader version don't have to care about updates until the mod stops working.  
+Thanks to the byte pattern signature scan, the mod verifies the integrity automatically, therefore it should never crash your game, if the code mismatches after a game update. It will simply stop working.
+
 [b][size=4]Troubleshooting[/size][/b]
-First of all, make sure you don't use an older or a different version of the mod. Especially if you've installed my fixed version from GitHub before, you should delete the [b]Starfield-LongerNames.dll[/b] or uninstall it with the mod manager!  
+First of all, make sure you don't use an older or a different version of the mod. Especially if you've installed my fixed version from GitHub before, you should [b]delete[/b] the [b]Starfield-LongerNames.dll[/b] or uninstall it with the mod manager!  
 
 If you're 100% sure that you're using the right SFSE for your game version and you still have trouble with the mod, please provide following information, if you want to report an issue.  
 [list=1]
