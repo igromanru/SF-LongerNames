@@ -28,8 +28,7 @@ namespace
 		auto inputBoxPatchAddress = reinterpret_cast<uintptr_t>(search_pattern<"48 8B 81 ?? ?? ?? ?? 48 8B 88 ?? ?? ?? ?? 44 89 81">());
 		if (inputBoxPatchAddress) {
 			inputBoxPatchAddress += 14;
-			INFO("Found the input box patch address");
-			DEBUG("Input box patch address: {:x}", inputBoxPatchAddress);
+			INFO("Found the input box patch address: {:x}", inputBoxPatchAddress);
 
 			InputBoxCave inputBoxCave{ Settings::GetSingleton()->GetMaxNameLength() };
 			inputBoxCave.ready();
@@ -52,8 +51,7 @@ namespace
 	{
 		auto itemNameLengthAddress = reinterpret_cast<uintptr_t>(search_pattern<"3B 3D ?? ?? ?? ?? 0F 87 ?? ?? ?? ?? F6 43 ?? 02">());
 		if (itemNameLengthAddress) {
-			INFO("Found the item name length check address");
-			DEBUG("Item name length check address: {:x}", itemNameLengthAddress);
+			INFO("Found the item name length check address: {:x}", itemNameLengthAddress);
 
 			ItemNameLengthCheckCave itemNameLengthCheckCave{ Settings::GetSingleton()->GetMaxNameLength() };
 			itemNameLengthCheckCave.ready();
@@ -99,6 +97,7 @@ namespace
 				// Load the settings file
 				Settings::GetSingleton()->Load();
 				// Apply patches
+				INFO("Game base: {:x}", Module::get().base());
 				PatchInputBox();
 				PatchItemNameLengthCheck();
 				break;
@@ -122,7 +121,7 @@ DLLEXPORT bool SFSEAPI SFSEPlugin_Load(const SFSE::LoadInterface* a_sfse)
 	INFO("{} v{} loaded", Plugin::NAME, Plugin::Version);
 
 	// Insert plugin to messaging interface
-	SFSE::AllocTrampoline(1 << 8);
+	SFSE::AllocTrampoline(256);
 	SFSE::GetMessagingInterface()->RegisterListener(MessageCallback);
 
 	return true;
