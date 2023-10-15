@@ -90,7 +90,5 @@ extern "C" __declspec(dllexport) void InitializeASI()
 
 BOOL APIENTRY DllMain(HMODULE a_hModule, DWORD a_dwReason, LPVOID a_lpReserved)
 {
-
-
 	return TRUE;
 }
