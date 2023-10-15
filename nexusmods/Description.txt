@@ -7,19 +7,18 @@ I've found the second check, made the mod update resistant, it supports all vers
 [list]
 [*][size=3][url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url][/size]
 [*][b]Or[/b]
-[*][size=3][url=https://github.com/ThirteenAG/Ultimate-ASI-Loader]Ultimate ASI Loader[/url][/size] (bink2w64.dll version)
+[*][size=3][url=https://github.com/ThirteenAG/Ultimate-ASI-Loader]Ultimate ASI Loader[/url][/size]
 [/list]
-
-[font=Verdana][size=4][b]Installation of the SFSE version via Vortex[/b][/size][/font]
+[font=Verdana][size=4][b]Installation of the SFSE version via a mod manage[/b][/size][/font]
 1. You NEED to install the [url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url] manually first and always launch the game with it, otherwise the mod won't work
-2. Simply click on [b]Mod Manager Download[/b] button in [i]Files[/i] tab
-3. Install the mod in Vortex like you do with any other mods
+2. Then to download the mod click on [b]Mod Manager Download[/b] button in [i]Files[/i] tab
+3. Install the mod in Vortex or MO2 like you do with any other mod
 4. Always launch the game with SFSE_loader. Here is a guide how to do it via steam: [url=https://www.nexusmods.com/starfield/mods/689]SFSE - Launch on Steam with In-Game Overlay[/url]
 
-[font=Verdana][size=4][b]Installation of the ASI Loader version via Vortex[/b][/size][/font]
-1. You NEED to install the [url=https://github.com/ThirteenAG/Ultimate-ASI-Loader]Ultimate ASI Loader[/url] manually first by downloading the [b]bink2w64.dll[/b]. Rename the original bink2w64.dll in the game root directory to [b]bink2w64Hooked.dll[/b] then copy the downloaded DLL in the same directory.
-2. Simply click on [b]Mod Manager Download[/b] button in [i]Files[/i] tab
-3. Install the mod in Vortex like you do with any other mods
+[font=Verdana][size=4][b]Installation of the ASI Loader version via a mod manager[/b][/size][/font]
+1. You NEED to install the [url=https://github.com/ThirteenAG/Ultimate-ASI-Loader]Ultimate ASI Loader[/url] manually first. Scroll down to the "Description" on the GitHub page and use [b]one of[/b] the following DLLs to install the ASI Loader: [b]dinput8.dll[/b] (x64), [b]wininet.dll[/b] (x64), [b]winmm.dll[/b]  (x64) or [b]binkw32.dll[/b].
+2. Then to download the mod click on [b]Mod Manager Download[/b] button in [i]Files[/i] tab
+3. Install the mod in Vortex or MO2 like you do with any other mod
 4. The ASI loader will start automatically every time you start the game
 
 [font=Verdana][size=4][b]Manual installation of the the SFSE version[/b][/size][/font]
@@ -37,7 +36,7 @@ To uninstall the mod/plugin manually, delete the [b]SF-LongerNames.dll[/b] from 
 [font=Verdana][size=4][b]Configuration[/b][/size][/font]
 [i]Since v2.0.0, the mod uses a toml file, before it was an ini.[/i]
 You can change the maximum allowed names length in the [b]SF-LongerNames.toml[/b].
-1. You will find the [b]SF-LongerNames.toml[/b] in the installation directory of the mod. It should be in [i](game root)[/i][i]\Data\SFSE\plugins\[/i] directory for the SFSE version.
+1. You will find the [b]SF-LongerNames.toml[/b] in the installation directory of the mod. It should be in [i](game root)[/i][i]\Data\SFSE\plugins\[/i] directory for the SFSE or in the  [i](game root)[/i] (location of the Starfield.exe) for the ASI Loader version.
     [size=2]If the file doesn't exist, start the game once, until the main menu, then the file should appear But close the game again, before doing any changes.[/size]
 2. Open the SF-LongerNames.toml with any Text Editor and change the value of [b]maxNameLength[/b].
 The value must be between 5 and 255.
@@ -46,11 +45,19 @@ The value must be between 5 and 255.
 [font=Verdana][size=4][b]Compatibility[/b][/size][/font]
 Obviously the mod is not compatible with [url=https://www.nexusmods.com/starfield/mods/1635]Longer Ship Outpost and Item Names[/url]. Which is currently outdated anyway, but if you're playing on the older version of the game or it will be fixed in the future, you shouldn't try to use both mods at the same time.
 
+[font=Verdana][b][size=4]Bug Reporting[/size][/b][/font]
+If you're 100% sure that you're using the right SFSE for your game version and you still have trouble with the mod, please provide following information, if you want to report an issue.  
+[list=1]
+[*]Your game version and update version (Steam/GamePass/Cracked, version 1.7.36 etc.)
+[*]Which mod version are you using, SFSE or ASI
+[*]Your installation method, if you're using Vortex, MO2 or manually.
+[*]Provide content of log files. For SFSE all logs should be in the Documents directory ([i]C:\Users\(windows user name)\Documents\My Games\Starfield\SFSE\Logs\[/i]), there I need the content of [b]sfse.txt[/b], [b]sfse_loader.txt[/b] and [b]SF-LongerNames.log[/b] files.
+For the ASI version, the log file should be in the mod DLL directory (default [i](game root)/Plugins/[/i]).
+[/list]
 [font=Verdana][size=2][b]Credits[/b][/size][/font]
 [list]
 [*][url=https://www.nexusmods.com/starfield/users/37869380]Investigamer[/url]﻿, the creator of the first mod
 [*][url=https://github.com/ianpatt/]ianpatt[/url] for [url=https://github.com/ianpatt/sfse]Starfield Script Extender[/url]
 [*][url=https://github.com/gottyduke]gottyduke[/url] for [url=https://github.com/gottyduke/DKUtil]DKUtil[/url] and [url=https://github.com/gottyduke/SF_PluginTemplate]SF_PluginTemplate[/url]
 [/list]
-
-[url=https://github.com/igromanru/Starfield-LongerNames/tree/fixed][size=1]My GitHub fork[/size][/url]
+[url=https://github.com/igromanru/SF-LongerNames][size=1]GitHub[/size][/url]
