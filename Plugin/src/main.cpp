@@ -15,7 +15,7 @@ namespace
 	{
 		ItemNameLengthCheckCave(int maxNameLength)
 		{
-			cmp(edi, maxNameLength);
+			cmp(esi, maxNameLength);
 		}
 	};
 
@@ -32,7 +32,7 @@ namespace
 
 			InputBoxCave inputBoxCave{ Settings::GetSingleton()->GetMaxNameLength() };
 			inputBoxCave.ready();
-
+			
 			const auto caveHookHandle = AddCaveHook(
 				inputBoxPatchAddress,
 				{ 0, 7 },
@@ -42,16 +42,14 @@ namespace
 				HookFlag::kRestoreAfterProlog);
 			caveHookHandle->Enable();
 			INFO("Input Box patched")
-		}
-		else
-		{
+		} else {
 			ERROR("Couldn't find the input box patch address");
 		}
 	}
 
 	void PatchItemNameLengthCheck()
 	{
-		auto itemNameLengthAddress = reinterpret_cast<uintptr_t>(search_pattern<"3B 3D ?? ?? ?? ?? 0F 87 ?? ?? ?? ?? F6 43 ?? 02">());
+		auto itemNameLengthAddress = reinterpret_cast<uintptr_t>(search_pattern<"3B 35 ?? ?? ?? ?? 0F 87 ?? ?? ?? ?? D1">());
 		if (itemNameLengthAddress) {
 			INFO("Found the item name length check address: {:x}", itemNameLengthAddress);
 
@@ -62,8 +60,7 @@ namespace
 			inputBoxPatch->Enable();
 			INFO("Item name length check patched")
 		}
-		else
-		{
+		else {
 			ERROR("Couldn't find the item name length check address");
 		}
 	}
