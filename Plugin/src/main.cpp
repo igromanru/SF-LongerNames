@@ -15,7 +15,7 @@ namespace
 	{
 		ItemNameLengthCheckCave(int maxNameLength)
 		{
-			cmp(edi, maxNameLength);
+			cmp(esi, maxNameLength);
 		}
 	};
 
@@ -49,7 +49,7 @@ namespace
 
 	void PatchItemNameLengthCheck()
 	{
-		auto itemNameLengthAddress = reinterpret_cast<uintptr_t>(search_pattern<"3B 3D ?? ?? ?? ?? 0F 87 ?? ?? ?? ?? F6 43 ?? 02">());
+		auto itemNameLengthAddress = reinterpret_cast<uintptr_t>(search_pattern<"3B 35 ?? ?? ?? ?? 0F 87 ?? ?? ?? ?? D1">());
 		if (itemNameLengthAddress) {
 			INFO("Found the item name length check address: {:x}", itemNameLengthAddress);
 
@@ -77,10 +77,6 @@ DLLEXPORT constinit auto SFSEPlugin_Version = []() noexcept {
 	data.HasNoStructUse(true);
 	//data.IsLayoutDependent(true);
 	data.CompatibleVersions({
-	    SFSE::RUNTIME_SF_1_7_23,
-		SFSE::RUNTIME_SF_1_7_29,
-		SFSE::RUNTIME_SF_1_7_33,
-		SFSE::RUNTIME_SF_1_7_36,
 		SFSE::RUNTIME_LATEST
 	});
 
